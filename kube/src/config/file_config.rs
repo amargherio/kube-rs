@@ -185,6 +185,28 @@ impl AuthInfo {
         Ok(())
     }
 
+    pub(crate) async fn load_azure(&mut self) -> Result<()> {
+        match &self.auth_provider {
+            Some(provider) => {
+                if let Some(access_token) = provider.config.get("access-token") {
+                    self.token = Some(access_token.clone());
+                    if utils::is_expired(&provider.config["expires-on"]) {
+                        let c_id = &provider.config["client-id"];
+                        let tenant_id = &provider.config["tenant-id"];
+                        let apiserver_id = &provider.config["apiserver-id"];
+                        let config_mode = &provider.config["config-mode"];
+                    }
+                }
+                if let Some(id_token) = provider.config.get("id-token") {
+                    self.token = Some(id_token.clone());
+                }
+            }
+            None => {}
+        }
+
+        Ok(())
+    }
+
     pub(crate) fn load_client_certificate(&self) -> Result<Vec<u8>> {
         utils::data_or_file_with_base64(&self.client_certificate_data, &self.client_certificate)
     }

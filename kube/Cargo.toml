@@ -36,6 +36,7 @@ bytes = "0.5.4"
 Inflector = "0.11.4"
 tokio = { version = "0.2.21", features = ["time", "signal", "sync"] }
 static_assertions = "1.1.0"
+azure_sdk_auth_aad = "= 0.45.0"
 
 [dependencies.reqwest]
 version = "0.10.6"
